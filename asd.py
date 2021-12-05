@@ -3,7 +3,6 @@ import os
 import json
 import pandas as pd
 from google.cloud import translate_v2 #наш переводчик
-import numpy as np
 from telegram import *
 from requests import *
 
@@ -28,6 +27,7 @@ LANGUAGES = {
 'bg': 'bulgarian',
 'ca': 'catalan',
 'ceb': 'cebuano',
+'ny': 'chichewa',
 'zh-cn': 'chinese (simplified)',
 'zh-tw': 'chinese (traditional)',
 'co': 'corsican',
@@ -134,12 +134,6 @@ def build_menu(buttons, n_cols,
     return menu
 
 
-# -------------------------------------------------
-
-def list_languages1(update, conext):
-    pass
-
-
 # ------------------LIST-------------------------------------------
 def list_languages(update, conext):  # список языков
     chat = update.effective_chat
@@ -166,9 +160,6 @@ def choose_language(update, conext):  # выбор языка, в разрабо
         [
             InlineKeyboardButton('Italian', callback_data='it'),
             InlineKeyboardButton('German', callback_data='de'),
-
-        ],
-        [
             InlineKeyboardButton('Polish', callback_data='pl'),
             InlineKeyboardButton('Spanish', callback_data='es'),
 
@@ -176,9 +167,6 @@ def choose_language(update, conext):  # выбор языка, в разрабо
         [
             InlineKeyboardButton('Greel', callback_data='el'),
             InlineKeyboardButton('Czech', callback_data='cs'),
-
-        ],
-        [
             InlineKeyboardButton('Latin', callback_data='la'),
             InlineKeyboardButton('Serbian', callback_data='sr'),
 
@@ -186,9 +174,6 @@ def choose_language(update, conext):  # выбор языка, в разрабо
         [
             InlineKeyboardButton('Slovak', callback_data='sk'),
             InlineKeyboardButton('Swedish', callback_data='sw'),
-
-        ],
-        [
             InlineKeyboardButton('Ukrainian', callback_data='uk'),
             InlineKeyboardButton('Norwegian', callback_data='no'),
 
@@ -212,12 +197,7 @@ def on_start(update, conext):
     conext.bot.send_message(chat_id=chat.id, text='Well... Go on.',
                             reply_markup=ReplyKeyboardMarkup(buttons))
     conext.bot.send_message(chat_id=chat.id, text='If you do not understand something, then click "Help".')
-    # вывод сообщения
-    with open('Moth.webp', 'rb') as file:  # вывод стикера
-        conext.bot.send_sticker(chat_id=chat.id, sticker=file)
 
-
-# ----------------------------------------------------------------------
 # ----------------------ANSWER-------------------------------------------
 def button(update, conext):
     """Parses the CallbackQuery and updates the message text."""
@@ -255,7 +235,7 @@ def helpo(update, conext):
 	 /help -> to get information that you need. \
 	 !!!WARNING!!!\
 	 If you have not chosen the language then you must do it,\
-	 otherwise it will not work.")
+	 otherwise it will not work. GitHub: https://github.com/KotikRiki")
 
 
 # ---------------------OTHERS STUFF-----------------------------------------------
